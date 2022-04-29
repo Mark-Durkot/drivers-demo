@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.md.security.jwt.JwtAuthenticationFilter;
 import com.md.security.jwt.JwtTokenVerifierFilter;
-import com.md.service.AppUserDetailsService;
+import com.md.service.AppUserService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,11 +27,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private final PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private AppUserDetailsService appUserService;
+	private AppUserService appUserService;
 	
 	@Autowired
 	public SecurityConfiguration(PasswordEncoder passwordEncoder,
-								 AppUserDetailsService appUserService) {
+								 AppUserService appUserService) {
 		this.passwordEncoder = passwordEncoder;
 		this.appUserService = appUserService;
 	}
@@ -40,8 +40,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.authorizeRequests().antMatchers("/login", "/users/register").permitAll();
 		http.addFilter(new JwtAuthenticationFilter(this.authenticationManager()));
 		http.addFilterBefore(new JwtTokenVerifierFilter(), UsernamePasswordAuthenticationFilter.class);
 		

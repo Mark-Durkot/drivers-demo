@@ -3,14 +3,18 @@ package com.md.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.md.entity.AppUser;
@@ -28,6 +32,7 @@ public class AppUserController {
 
 	private final AppUserService userService;
 	
+	@Autowired
 	public AppUserController(AppUserService userService) {
 		this.userService = userService;
 	}
@@ -39,12 +44,14 @@ public class AppUserController {
 	}
 	
 	@PostMapping("/register")
-	public AppUser register(AppUser appUser) {
+	public AppUser register(@RequestBody AppUser appUser) {
+		
 		try {
 			return userService.registerUser(appUser);	
 		} catch (RuntimeException e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 		}
+		
 	}
 	
 	@GetMapping("/token/refresh")
@@ -70,6 +77,16 @@ public class AppUserController {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 		}
 		
+	}
+	
+	@GetMapping("/{username}")
+	@PreAuthorize("hasRole('ROLE_ROOT')")
+	public AppUser getUserByUsername(@PathVariable String username) {
+		try {
+			return userService.loadUserByUsername(username);
+		} catch (RuntimeException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
 	}
 	
 }
