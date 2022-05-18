@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import com.md.entity.AppUser;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+	@Autowired
 	private final AuthenticationManager authenticationManager;
 	
 	public JwtAuthenticationFilter(AuthenticationManager authManager) {

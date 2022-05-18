@@ -27,7 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private final PasswordEncoder passwordEncoder;
 	
-	@Autowired
 	private AppUserService appUserService;
 	
 	@Autowired
@@ -51,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/", "/users/register");
+		web.ignoring().antMatchers("/", "/signup");
 	}
 	
 	@Override

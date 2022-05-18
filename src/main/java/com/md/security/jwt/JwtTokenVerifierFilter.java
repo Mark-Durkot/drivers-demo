@@ -34,7 +34,7 @@ public class JwtTokenVerifierFilter extends OncePerRequestFilter {
 			Authentication authentication = JwtTokenVerifier.verifyToken(access_token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		} catch (Exception e) {
-			response.sendError(403);
+			response.sendError(403, "Access denied");
 			return;
 		}
 		

@@ -17,6 +17,7 @@ import com.md.repository.AppUserRepository;
 @Service
 public class AppUserService implements UserDetailsService {
 
+	@Autowired
 	private final AppUserRepository userRepo;
 	
 	private final PasswordEncoder passwordEncoder;
@@ -39,9 +40,8 @@ public class AppUserService implements UserDetailsService {
 																	  username)));
 	}
 	
-	public AppUser registerUser(AppUser user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepo.save(user);
+	public boolean isPresent(AppUser user) {
+		return userRepo.findByUsername(user.getUsername()).isPresent();
 	}
 	
 	public void deleteUserByUsername(String username) {
