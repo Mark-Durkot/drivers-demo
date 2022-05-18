@@ -39,12 +39,12 @@ public enum AppUserRole
 	
 	private static List<AppUserPermission> list(AppUserPermission ...permissions) {
 		
-		List<AppUserPermission> set = new ArrayList<>();
+		List<AppUserPermission> list = new ArrayList<>();
 		
 		for (AppUserPermission p : permissions) {
-			set.add(p);
+			list.add(p);
 		}
 		
-		return set;
+		return list;
 	}
 }

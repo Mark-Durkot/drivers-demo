@@ -22,12 +22,12 @@ import com.md.entity.AppUser;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	@Autowired
 	private final AuthenticationManager authenticationManager;
-	
+
+	@Autowired
 	public JwtAuthenticationFilter(AuthenticationManager authManager) {
 		this.authenticationManager = authManager;
 	}
