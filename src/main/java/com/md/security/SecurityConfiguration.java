@@ -41,7 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().antMatchers("/login").permitAll();
+		http.authorizeRequests().antMatchers("/login", "/signup").permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
 		http.addFilter(new JwtAuthenticationFilter(this.authenticationManager()));
 		http.addFilterAfter(new JwtTokenVerifierFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/", "/signup");
+		web.ignoring().antMatchers("/", "/signup/**");
 	}
 	
 	@Override

@@ -43,17 +43,6 @@ public class AppUserController {
 		return userService.getAllUsers(); 
 	}
 	
-	@PostMapping("/register")
-	public AppUser register(@RequestBody AppUser appUser) {
-		
-		try {
-			return userService.registerUser(appUser);	
-		} catch (RuntimeException e) {
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-		}
-		
-	}
-	
 	@GetMapping("/token/refresh")
 	public void tokenRefresh(HttpServletRequest request, HttpServletResponse response) {
 		
